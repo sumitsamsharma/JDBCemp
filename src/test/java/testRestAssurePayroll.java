@@ -79,7 +79,11 @@ public class testRestAssurePayroll {
             }
         }
     }
-
-
-
+    
+    @Test
+    public void Check_DeleteEmp_Method() {
+        int id = 1;
+        Response response = RestAssured.delete("/employees/delete/" + id);
+        Assert.assertEquals(200, response.getStatusCode());
+    }
 }
