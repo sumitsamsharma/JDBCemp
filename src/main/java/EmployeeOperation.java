@@ -61,11 +61,11 @@ public class EmployeeOperation {
         Connection c = con.getConnection();
         try {
             c.setAutoCommit(false);
-            //Pushing Company details
+            //inserting in Company details
             updateStmt = c.prepareStatement("insert into company(company_name) values (?)");
             updateStmt.setString(1, e.company_name);
             updateStmt.executeUpdate();
-            //Getting the company_id which is auto-set in sql and setting it into the object
+            //Getting company_id
             updateStmt = c.prepareStatement("select company_id from company where company_name=?");
             updateStmt.setString(1, e.company_name);
             ResultSet result = updateStmt.executeQuery();
@@ -80,18 +80,20 @@ public class EmployeeOperation {
             updateStmt.setString(4, e.address);
             updateStmt.setString(5, Character.toString(e.gender));
             updateStmt.executeUpdate();
+
             //Pushing department details
             updateStmt = c.prepareStatement("insert into department(department_name) values (?)");
             updateStmt.setString(1, e.department_name);
             updateStmt.executeUpdate();
-            //Getting the employee_id which is autoset in sql and setting it into the object
+
+            //Getting the employee_id
             updateStmt = c.prepareStatement("select emp_id from employee where name=?");
             updateStmt.setString(1, e.name);
             ResultSet result1 = updateStmt.executeQuery();
             while (result1.next()) {
                 e.emp_id = result1.getInt(1);
             }
-            //Getting the employee_id which is autoset in sql and setting it into the object
+            //Getting the employee_id which
             updateStmt = c.prepareStatement("select department_id from department where department_name=?");
             updateStmt.setString(1, e.department_name);
             ResultSet rs = updateStmt.executeQuery();
@@ -179,6 +181,22 @@ public class EmployeeOperation {
         }
     }
 
+    public void addEmployeesWithThread(ArrayList<Employee> employeeList) {
+        System.out.println("addEmployeesWithThread");
+        for (Employee e : employeeList) {
+            Runnable task = () -> {
+                createEmployee(e);
+            };
+            Thread thread = new Thread(task);
+            thread.start();
+            try {
+                thread.sleep(150);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+        }
+    }
 
+    
 
 }

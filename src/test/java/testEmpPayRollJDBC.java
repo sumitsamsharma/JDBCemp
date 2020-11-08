@@ -65,5 +65,25 @@ public class testEmpPayRollJDBC {
         p.cascadingDelete("Abc");
     }
 
-   
+    @Test
+    public void Adding_MultipleEmployees_withThread() {
+        p = EmployeeOperation.getInstance();
+        ArrayList<Employee> arr = new ArrayList<>();
+        int count = p.readData().size();
+        System.out.println(count);
+        Instant start = Instant.now();
+        Employee e1 = new Employee("Capgemini", "Sales", "Sanju", "862367890", "ABC", 'F', 60000);
+        Employee e2 = new Employee("HP", "IOT", "Sumit", "9342154321", "Bihar", 'M', 40000);
+        arr.add(e1);
+        arr.add(e2);
+        p.addEmployeesWithThread(arr);
+        Instant end = Instant.now();
+        System.out.println("Duration With Thread: " + Duration.between(start, end));
+        Assert.assertEquals(count + 2, p.readData().size());
+        System.out.println(p.readData().size());
+        p.cascadingDelete("Sanju");
+        p.cascadingDelete("Sumit");
+    }
+
+
 }
