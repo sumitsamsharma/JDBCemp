@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="testEmpPayRollJDBC" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-11-08T05:40:03" hostname="DESKTOP-7FT5EBS" time="2.118">
+  <properties/>
+  <testcase name="Adding_MultipleEmployees" classname="testEmpPayRollJDBC" time="2.118"/>
+  <system-out><![CDATA[Duration Without Thread: PT0.6585394S
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
