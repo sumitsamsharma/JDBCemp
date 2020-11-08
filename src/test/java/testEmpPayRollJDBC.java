@@ -85,5 +85,12 @@ public class testEmpPayRollJDBC {
         p.cascadingDelete("Sumit");
     }
 
-
+    @Test
+    public void Updating_MultipleEmployees_withThread() {
+        p = EmployeeOperation.getInstance();
+        String[] name = {"Abhishek", "Preeti"};
+        int[] salary = {10000, 20000};
+        p.updateSalaryWithThread(name, salary);
+        Assert.assertEquals(10000, p.readData().get(0).basic_pay);
+    }
 }

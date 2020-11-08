@@ -93,7 +93,7 @@ public class EmployeeOperation {
             while (result1.next()) {
                 e.emp_id = result1.getInt(1);
             }
-            //Getting the employee_id which
+            //Getting the employee_id w
             updateStmt = c.prepareStatement("select department_id from department where department_name=?");
             updateStmt.setString(1, e.department_name);
             ResultSet rs = updateStmt.executeQuery();
@@ -197,6 +197,22 @@ public class EmployeeOperation {
         }
     }
 
-    
+    public void updateSalaryWithThread(String[] name, int[] salary) {
+        System.out.println("updateSalaryWithThread");
+        for (int i = 0; i < name.length; i++) {
+            String n = name[i];
+            int s = salary[i];
+            Runnable task = () -> {
+                update(n, s);
+            };
+            Thread thread = new Thread(task);
+            thread.start();
+            try {
+                thread.sleep(10000);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+        }
+    }
 
 }
